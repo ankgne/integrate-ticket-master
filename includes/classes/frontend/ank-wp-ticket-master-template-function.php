@@ -143,50 +143,53 @@ if (!function_exists('ank_wp_display_ticket_search_event')) {
 if (!function_exists('ank_wp_display_ticket_search_event_pagination')) {
     function ank_wp_display_ticket_search_event_pagination($ank_wp_json_response){
         $redirect_args=array ("ank-wp-event-details"=>true); //used in template loader to load template
+        $pagination_count=4;
 
-        $chunks = array_chunk(preg_split('/(=|&)/', $ank_wp_json_response->_links->next->href), 2);
-        $next_url = array_combine(array_column($chunks, 0), array_column($chunks, 1));
-
-        $page_size=$ank_wp_json_response->page->size;
         $total_pages=$ank_wp_json_response->page->totalPages;
 
-        $next_page_number=($next_url['page']);
-        $current_page_number=$next_page_number-1;
-
-        $remaining_page=$total_pages-($current_page_number+3);
+        $current_page_number=$ank_wp_json_response->page->number;
 
         $redirect_url= get_permalink();
         $ank_wp_redirect_url = add_query_arg( $redirect_args, $redirect_url );
 
+        //Took pagination calculation logic from here https://stackoverflow.com/questions/11272108/logic-behind-pagination-like-google
+        $startPage = $current_page_number - $pagination_count;
+        $endPage = $current_page_number + $pagination_count;
+
+        if ($startPage <= 0) {
+            $endPage -= ($startPage - 1);
+            $startPage = 1;
+        }
+
+        if ($endPage > $total_pages)
+            $endPage = $total_pages;
+
         ?>
         <!-- Pagination -->
         <ul class="pagination justify-content-center">
-            <?php if ($current_page_number != 0){?>
+            <?php if ($startPage > 1) { ?>
                 <li class="page-item">
-                    <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number-1) );?>" aria-label="Previous">
+                    <a class="page-link"
+                       href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($startPage - 1)); ?>"
+                       aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
-            <?php } ?>
-            <li class="page-item">
-                <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number) );?>"><?php echo $current_page_number + 1 ?></a> <!--current page-->
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number + 1 ) );?>"><?php echo $current_page_number + 2 ?></a> <!--next page-->
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number + 2) );?>"><?php echo $current_page_number + 3 ?></a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number + 3) );?>"><?php echo $current_page_number + 4 ?></a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number + 4) );?>"><?php echo $current_page_number + 5 ?></a>
-            </li>
-            <?php if ($remaining_page != 0){//do not show if there are no remaining pages?>
+                <?php
+            }
+            for($i=$startPage; $i<=$endPage; $i++)  {
+                    ?>
+                    <li class="page-item">
+                        <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($i-1) );?>"><?php echo $i ?></a> <!--current page-->
+                    </li>
+                    <?php
+                }
+            ?>
+
+            <?php if ($endPage < $total_pages){//do not show if there are no remaining pages?>
                 <li class="page-item">
-                    <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number + 5) );?>" aria-label="Next">
+                    <a class="page-link" href="<?php echo esc_url($ank_wp_redirect_url . "&api_page=" . ($current_page_number+1) );?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>

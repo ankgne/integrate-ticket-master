@@ -7,14 +7,14 @@
   Author: Ankur Khurana
   Author URI:http://mywp.ooo
   COntributors:
-  Version: 1.0.0
+  Version: 1.0.1
   @copyright   Copyright (c) 2018, Ankur Khurana
   @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
 final class AK_TicketMaster_Wordpress { //final to avoid extension/inheritance of class
 
-    public $ank_wp_ticket_version = '1.0.0';
+    public $ank_wp_ticket_version = '1.0.1';
     public $ak_ticket_api_key;
     protected static $_instance = null;
 
