@@ -53,7 +53,8 @@ class ank_wp_ticket_api_call
                 "size"=>AK_TicketMaster_Wordpress::$ank_wp_ticket_event_count,
                 "countryCode"=>AK_TicketMaster_Wordpress::$ank_wp_ticket_country_code,
                 "classificationName"=>AK_TicketMaster_Wordpress::$ank_wp_ticket_classificationName,
-                "dmaId"=>AK_TicketMaster_Wordpress::$ank_wp_ticket_dmaid
+                "dmaId"=>AK_TicketMaster_Wordpress::$ank_wp_ticket_dmaid,
+                "sort"=>AK_TicketMaster_Wordpress::$ank_wp_ticket_event_sort_by
             );
 
             $args       = apply_filters( 'ank_wp_ticket_discovery_query_args', $this->ank_wp_discover_api_setting );

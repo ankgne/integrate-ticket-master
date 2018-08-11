@@ -31,7 +31,7 @@ class Ank_Wp_Ticket_Frontend
      * @return  void
      */
     public function ank_wp_ticket_get_event_shortcode($atts) {
-        $atts = shortcode_atts(array('genre' => '', 'event_count' => '10', 'dmaid' => '', 'country_code' => 'US'), $atts, 'ank_wp_ticket_get_event_shortcode');
+        $atts = shortcode_atts(array('genre' => '', 'event_count' => '10', 'dmaid' => '', 'country_code' => 'US', 'title'=>''), $atts, 'ank_wp_ticket_get_event_shortcode');
 
         //shortcode overwrites the settings page values
         if (isset($atts['genre'])) {
@@ -42,6 +42,8 @@ class Ank_Wp_Ticket_Frontend
             AK_TicketMaster_Wordpress::$ank_wp_ticket_event_count=$atts['event_count'];
         }  if (isset($atts['country_code']))  {
             AK_TicketMaster_Wordpress::$ank_wp_ticket_country_code=$atts['country_code'];
+        }if (isset($atts['title']))  {
+            AK_TicketMaster_Wordpress::$ank_wp_ticket_event_title=$atts['title'];
         }
         //Displays details of the event based on agruements set above
         ank_wp_display_ticket_search_event();

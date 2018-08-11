@@ -7,14 +7,14 @@
   Author: Ankur Khurana
   Author URI:http://mywp.ooo
   COntributors:
-  Version: 1.0.1
+  Version: 2.0.0
   @copyright   Copyright (c) 2018, Ankur Khurana
   @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
 final class AK_TicketMaster_Wordpress { //final to avoid extension/inheritance of class
 
-    public $ank_wp_ticket_version = '1.0.1';
+    public $ank_wp_ticket_version = '2.0.0';
     public $ak_ticket_api_key;
     protected static $_instance = null;
 
@@ -25,6 +25,8 @@ final class AK_TicketMaster_Wordpress { //final to avoid extension/inheritance o
     public static $ank_wp_ticket_country_code= '';
     public static $ank_wp_ticket_classificationName= '';
     public static $ank_wp_ticket_dmaid= '';
+    public static $ank_wp_ticket_event_sort_by= '';
+    public static $ank_wp_ticket_event_title= '';
 
     /**
      * Initiates the plugin
@@ -160,6 +162,7 @@ final class AK_TicketMaster_Wordpress { //final to avoid extension/inheritance o
         //AK_TicketMaster_Wordpress::$ank_wp_ticket_event_count = get_option('ank_wp_ticket_count_event_page');
         AK_TicketMaster_Wordpress::$ank_wp_ticket_api_url = get_option('ank_wp_ticket_api_url');
         //AK_TicketMaster_Wordpress::$ank_wp_ticket_country_code = get_option('ank_wp_ticket_country');
+        AK_TicketMaster_Wordpress::$ank_wp_ticket_event_sort_by = get_option('ank_wp_ticket_event_sort_by');
     }
 
     /**

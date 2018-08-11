@@ -76,6 +76,7 @@ class ank_wp_ticket_settings_form
             //add_settings_field("ank_wp_ticket_count_event_page", "Number of events per page", array($this, 'ank_wp_ticket_display_number_event_page'), "ticket-master-settings", "ank_wp_ticket_settings_section");
             add_settings_field("ank_wp_ticket_api_url", "Api URL", array($this, 'ank_wp_ticket_display_api_url'), "ticket-master-settings", "ank_wp_ticket_settings_section");
             //add_settings_field("ank_wp_ticket_country", "Enter your country code", array($this, 'ank_wp_ticket_display_country'), "ticket-master-settings", "ank_wp_ticket_settings_section");
+            add_settings_field("ank_wp_ticket_event_sort_by", "Sort event search result by", array($this, 'ank_wp_ticket_event_sort_by'), "ticket-master-settings", "ank_wp_ticket_settings_section");
 
             //section name, form element name, callback for sanitization
             register_setting("ank_wp_ticket_settings_section", "ank_wp_ticket_debug_mode");
@@ -83,6 +84,7 @@ class ank_wp_ticket_settings_form
             //register_setting("ank_wp_ticket_settings_section", "ank_wp_ticket_count_event_page");
             register_setting("ank_wp_ticket_settings_section", "ank_wp_ticket_api_url");
             //register_setting("ank_wp_ticket_settings_section", "ank_wp_ticket_country");
+            register_setting("ank_wp_ticket_settings_section", "ank_wp_ticket_event_sort_by");
         }
 
     public function ank_wp_ticket_display_header_options_content(){
@@ -129,5 +131,19 @@ class ank_wp_ticket_settings_form
         <?php
     }
 
+    public function ank_wp_ticket_event_sort_by()
+    {
+        $options=get_option('ank_wp_ticket_event_sort_by');
+        $items = array("Event Name Ascending"=>"name,asc", "Event Name Descending" => "name,desc", "Event Date Ascending" => 'date,asc',
+            "Event Date Descending" => 'date,desc', "Relevancy Ascending" => 'relevance,asc',"Relevancy Descending" => 'relevance,desc',
+            "Event name and date Ascending" => 'name,date,asc',"Event name and date Descending" => 'name,date,desc',);
+        //id and name of form element should be same as the setting name.
+
+        echo "<select name='ank_wp_ticket_event_sort_by' id='ank_wp_ticket_event_sort_by'>";
+        foreach($items as $name => $value) {
+            $selected = ($options==$value) ? 'selected="selected"' : '';
+            echo "<option value='$value' $selected>$name</option>";
+        }
+    }
 
 }

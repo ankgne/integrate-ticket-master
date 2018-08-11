@@ -25,3 +25,34 @@
 .site-content .entry-header, .site-content .entry-content, .site-content .entry-summary, .site-content .entry-meta, .page-content{
     max-width: 100% !important;   /*hack of max-width of 2014 theme*/
 }
+
+.reference .reference-title{
+    margin: 0px;
+    text-align: center;
+}
+
+#references .title{
+    margin: 20px;
+}
+
+#pagination li a {
+    color: #4fbfa8;
+}
+
+#pagination li.active a, #pagination li:hover a ,#detail a:hover{
+    color: #fff;
+    text-decoration: none;
+    background: #4fbfa8;
+}
+
+#detail a{
+    color: #4fbfa8;
+}
+
+#resultstats{
+    font-size: small;
+}
+
+section {
+    padding: 0px;
+}
